@@ -13,5 +13,3 @@ Tags: flight, route, schedule, airport, airplane, airline
 
 
 == Copyright ==
-
-
