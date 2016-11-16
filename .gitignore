@@ -1,0 +1,86 @@
+# Wordpress files
+
+
+# ignore everything in the root except the "wp-content" directory.
+/*
+!wp-content/
+
+# ignore everything in the "wp-content" directory, except:
+# "mu-plugins" directory
+# "plugins" directory
+# "themes" directory
+wp-content/*
+!wp-content/mu-plugins/
+!wp-content/plugins/
+!wp-content/themes/
+
+# ignore these plugins
+wp-content/plugins/hello.php
+wp-content/plugins/akismet/
+
+# ignore specific themes
+wp-content/themes/twenty*/
+
+*.log
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/wp-cache-config.php
+wp-content/plugins/hello.php
+
+/.htaccess
+/license.txt
+/readme.html
+/sitemap.xml
+/sitemap.xml.gz
+
+# JetBrains files (IDE)
+
+# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
+# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
+
+# User-specific stuff:
+.idea/*
+#.idea/workspace.xml
+#.idea/tasks.xml
+
+# Sensitive or high-churn files:
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
+
+# Mongo Explorer plugin:
+.idea/mongoSettings.xml
+
+## File-based project format:
+*.iws
+
+## Plugin-specific files:
+
+# IntelliJ
+/out/
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
+# JIRA plugin
+atlassian-ide-plugin.xml
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-build.properties
+fabric.properties
