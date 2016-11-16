@@ -1,0 +1,3 @@
+[submodule "wp-content/plugins/data2table"]
+	path = wp-content/plugins/data2table
+	url = https://github.com/anjakammer/data2table.git
