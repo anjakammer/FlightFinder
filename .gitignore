@@ -10,7 +10,6 @@
 # "plugins" directory
 # "themes" directory
 wp-content/*
-!wp-content/mu-plugins/
 !wp-content/plugins/data2table/
 !wp-content/themes/
 
