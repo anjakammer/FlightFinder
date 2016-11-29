@@ -10,7 +10,7 @@
 # "plugins" directory
 # "themes" directory
 wp-content/*
-!wp-content/plugins/data2table/
+!wp-content/plugins/d2t/
 !wp-content/themes/
 
 # ignore specific themes
