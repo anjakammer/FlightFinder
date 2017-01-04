@@ -11,3 +11,200 @@ Text Domain: flightfindertheme
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
+	/* Main styles */
+	html, body {
+		height: auto;
+		margin: 0;
+		padding: 0;
+		font-family: 'Titillium Web', sans-serif !important;
+		overflow-x: hidden;
+    }
+	
+	/* Navigation-Menu */
+	#nav-menu {
+		width: 100%;
+		height: 50px;
+		top: 0;
+		left: 0;
+		position: fixed;
+		background: rgba(0,0,0,0.8);
+		z-index: 20;
+	}
+	
+	#nav-menu ul{
+		margin: 0px;
+	}
+	
+	#nav-menu li {
+		list-style: none;
+	}
+	
+	#nav-menu a {
+		padding: 10px;
+		display: inline-block;
+		font-size: 16px;
+		font-weight: bold;
+		color: #fff;
+		text-decoration: none;
+	}
+	
+	#nav-menu a:hover {
+		text-decoration: none;
+	}
+
+	/* Map Styles */
+    #map {
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		position: absolute;
+    }
+	
+	/* Search Styles */
+	#search-box {
+		position: absolute;
+		top: 50px;
+		right: 10px;
+		width: 25%;
+		z-index: 5;
+		font-size: 130%;
+		line-height: 130%;
+		float: right;
+		padding: 18px;
+		background-color: rgba(0,0,0,0.6);
+	}
+	
+	#search-box label {
+		font-size: 16px;
+		font-weight: normal;
+		color: #fff;
+	}
+	
+	#search-box input {
+		width: 100%;
+		height: 32px;
+		padding: 5px;
+		font-size: 12px;
+		color: #333;
+		margin: 2px 0;
+	}
+	
+	#search-box #origin-results, 
+	#search-box #destination-results {
+		display:none;
+		width: 300px;
+		height: 200px;
+		background: #fff;
+		color: #777777;
+		font-size: 12px;
+		font-weight: normal;
+		overflow-y: scroll;
+		padding: 5px;
+		position: absolute;
+		z-index: 20;
+	}
+	
+	#search-box #origin-results strong, 
+	#search-box #destination-results strong {
+		font-size: 12px;
+		font-weight: normal;
+		color: #777777;
+	}
+	
+	#search-box .input-group.date #outward-date,
+	#search-box .input-group.date #return-date	{
+		width: 100%;
+		float: left;
+		margin: 0px;
+		border-radius: 0px;
+	}
+	
+	#search-box .input-group-addon {
+		border: 1px;
+		box-sizing: content-box;
+		-moz-box-sizing: content-box;
+	}
+	
+	#search-box .date-input {
+		margin: 4px 0;
+	}
+	
+	#search-box #one-way-flight {
+		width: auto;
+		vertical-align: middle;
+		margin: 0px;
+	}
+	
+	#search-box select {
+		height: 32px;
+		width: 100%;
+		font-size: 12px;
+		color: #333;
+	}
+	
+	#search-submit {
+		height: auto !important;
+		width: 47.5% !important;
+		margin: 5px;
+		background: #0C89C9;
+		border:none;
+		border-radius:0px !important;
+		box-shadow:none !important;
+		color: #FFF !important;
+		font-size: 16px !important;
+	}
+	
+	.error {
+		display:none;
+		color:red;
+		font-size:12px;
+	}
+	
+	/* Result Styles */
+	#result-box {
+		display: none;
+		width: 100%;
+		position:absolute;
+		padding: 10px 10px;
+		z-index:19;
+		top: 100vh;
+		background:#333;
+	}
+		
+	#flight-results {
+		width:100%;
+		height:auto;
+		background-color:#CCC;
+		border:1px solid #CCC;
+		border-radius:5px;
+	}
+		
+	#flight-results tr th {
+		width:50%;
+		height:auto;
+		padding:5px;
+		background-color:#AAA;
+	}
+		
+	#flight-results tr td {
+		width:50%;
+		height:auto;
+		padding:5px;
+		background-color:#EEE;
+	}
+		
+	#flight-results tr td.flight-result-price {
+		background-color:#CCC;
+	}
+		
+	.outward-details,
+	.return-details	{
+		width:100%;
+		height:auto;
+	}
+	
+	.outward-details img,
+	.return-details img	{
+		width: 100px;
+		height: auto;
+	}
