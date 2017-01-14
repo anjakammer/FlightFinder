@@ -2,6 +2,8 @@
 		
         $('#search-form').on('submit', function (e) {
 			
+			$("#submit-flight-request").prop('value', 'Loading...');
+			
 			var from_airport = $("#origin").val();
 			var to_airport = $("#destination").val();
 			var outward_date = $("#outward-date").val();
@@ -21,19 +23,85 @@
 					   type: "POST",
 					   url: url,
 					   data: $("#search-form").serialize(),
+					   dataType: 'json',
+					   cache: false,
 					   beforeSend: function () {
-						   $('#submit-flight-request').html('Loading Flights...');
+						   $("#submit-flight-request").prop('value', 'Loading...');
 					   },
 					   success: function(data)
 					   {
-						   $('#submit-flight-request').html('Search Flights');
+						   var outwardFlights = data['outward'];
+						   var returnFlights = data['return'];
+						 
+						   createFlightInfo(outwardFlights,'outward');
+						   createFlightInfo(returnFlights,'return');
+						  
 						   $('#result-box').css('display', 'block');
-						   $('#result-box').html(data);
+						   $('#switch-filter').css('display', 'block');						   
+						   $("#submit-flight-request").prop('value', 'Search');   
 						   setMarkers(latitude_from, longitude_from, latitude_to, longitude_to);
+						   
+						   localStorage.setItem("outward", JSON.stringify(outwardFlights));
+						   localStorage.setItem("return", JSON.stringify(returnFlights));
 					   }
 				});
 			}
-
 			e.preventDefault(); // avoid to execute the actual submit of the form.
 		});
 	});
+	
+	function createFlightInfo(element,flight) {
+		var last_price = '';
+		var id = '';
+		var activeClass = '';
+		
+		if(flight == 'outward') {
+			id = '#outward';
+		} else {
+			id = '#return';
+		}
+		
+		for(var i=0; i < element.length; i++) {			
+			if(element[i].price != last_price) {
+				var flightBlock = document.createElement("div");
+				$( flightBlock ).addClass('flight-block');
+				$( id ).append( flightBlock );
+			
+				var priceField = document.createElement("div");
+				$( priceField ).addClass('price-field');
+				$( priceField ).append(element[i].price + '€ Hin- & Rückflug');
+				$( flightBlock ).append( priceField );
+			}
+			
+			var airlineField = document.createElement("div");
+				$( airlineField ).addClass('info-field');
+				$( airlineField ).append('<a href="' + element[i].airline_link + '"><img src="' + element[i].airline_image + '" /><br>' + element[i].airline_name + ' (' + element[i].airline_iata + ')</a>');
+				
+				$( flightBlock ).append( airlineField );	
+				$( flightBlock ).append( getField(element[i].origin,'') );
+				$( flightBlock ).append( getField(element[i].destination,'') );
+				$( flightBlock ).append( getField(element[i].departure,'dat') );
+				$( flightBlock ).append( getField(element[i].arrival,'dat2') );
+				$( flightBlock ).append( getField(element[i].duration,'dur') );
+			
+			last_price = element[i].price;
+		}
+	}
+	
+	function getField(element,type) {
+		var field = document.createElement("div");
+		$( field ).addClass('info-field');
+		if(type == 'dat') {
+			$( field ).append(element + ' Uhr');
+			$( field ).addClass('departure');
+		} else if(type == 'dat2') {
+			$( field ).append(element + ' Uhr');
+			$( field ).addClass('arrival');
+		} else if(type == 'dur') {
+			$( field ).append(element + ' min');
+			$( field ).addClass('duration');
+		} else {
+			$( field ).append(element);
+		}
+		return field;
+	}

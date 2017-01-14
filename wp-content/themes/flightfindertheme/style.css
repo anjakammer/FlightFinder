@@ -23,7 +23,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 	/* Navigation-Menu */
 	#nav-menu {
 		width: 100%;
-		height: 50px;
+		height: 50px !important;
 		top: 0;
 		left: 0;
 		position: fixed;
@@ -40,9 +40,10 @@ Use it to make something cool, have fun, and share what you've learned with othe
 	}
 	
 	#nav-menu a {
+		float:right;
 		padding: 10px;
 		display: inline-block;
-		font-size: 16px;
+		font-size: 20px;
 		font-weight: bold;
 		color: #fff;
 		text-decoration: none;
@@ -50,6 +51,40 @@ Use it to make something cool, have fun, and share what you've learned with othe
 	
 	#nav-menu a:hover {
 		text-decoration: none;
+	}
+	
+	#nav-menu .cl-effect-15 a {
+	color: rgba(0,0,0,0.2);
+	font-weight: 700;
+	text-shadow: none;
+}
+
+	#nav-menu .cl-effect-15 a::before {
+		color: #fff;
+		content: attr(data-hover);
+		position: absolute;
+		-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+		-moz-transition: -moz-transform 0.3s, opacity 0.3s;
+		transition: transform 0.3s, opacity 0.3s;
+	}
+
+	#nav-menu .cl-effect-15 a:hover::before,
+	#nav-menu .cl-effect-15 a:focus::before {
+		-webkit-transform: scale(0.9);
+		-moz-transform: scale(0.9);
+		transform: scale(0.9);
+		opacity: 0;
+	}
+	
+	#nav-menu #switch-filter {
+		display: none;
+		float: right;
+		padding: 10px;
+		font-size: 20px;
+		color: #EEE;
+		border: none;
+		background: transparent;
+		box-shadow: none;
 	}
 
 	/* Map Styles */
@@ -63,7 +98,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 	/* Search Styles */
 	#search-box {
 		position: absolute;
-		top: 50px;
+		top: 60px;
 		right: 10px;
 		width: 25%;
 		z-index: 5;
@@ -72,6 +107,15 @@ Use it to make something cool, have fun, and share what you've learned with othe
 		float: right;
 		padding: 18px;
 		background-color: rgba(0,0,0,0.6);
+	}
+	
+	#search-box .input-group-addon {
+		float:none;
+		background: #0C89C9 !important;
+	}
+	
+	#search-box .input-group-addon .glyphicon-calendar {
+		color: #fff;
 	}
 	
 	#search-box label {
@@ -84,7 +128,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 		width: 100%;
 		height: 32px;
 		padding: 5px;
-		font-size: 12px;
+		font-size: 14px;
 		color: #333;
 		margin: 2px 0;
 	}
@@ -92,16 +136,29 @@ Use it to make something cool, have fun, and share what you've learned with othe
 	#search-box #origin-results, 
 	#search-box #destination-results {
 		display:none;
-		width: 300px;
-		height: 200px;
+		width: 344px;
+		height: auto;
+		max-height:200px;
 		background: #fff;
 		color: #777777;
-		font-size: 12px;
+		font-size: 14px;
 		font-weight: normal;
 		overflow-y: scroll;
 		padding: 5px;
 		position: absolute;
 		z-index: 20;
+	}
+	
+	#search-box #origin-results .ap_item,
+	#search-box #destination-results .ap_item	{
+		cursor:pointer;
+	}
+	
+	#search-box #origin-results .ap_item:hover,
+	#search-box #destination-results .ap_item:hover	{
+		cursor:pointer;
+		border: 1px solid rgb(86, 180, 239);
+		box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
 	}
 	
 	#search-box #origin-results strong, 
@@ -142,16 +199,15 @@ Use it to make something cool, have fun, and share what you've learned with othe
 		color: #333;
 	}
 	
-	#search-submit {
-		height: auto !important;
-		width: 47.5% !important;
-		margin: 5px;
-		background: #0C89C9;
-		border:none;
-		border-radius:0px !important;
-		box-shadow:none !important;
+	#search-box #submit-flight-request {
+		width: 100% !important;
+		height: auto;
+		background: #0C89C9 !important;
+		border: none;
+		border-radius: 0px;
+		box-shadow: none;
 		color: #FFF !important;
-		font-size: 16px !important;
+		font-size: 16px!important;
 	}
 	
 	.error {
@@ -160,51 +216,150 @@ Use it to make something cool, have fun, and share what you've learned with othe
 		font-size:12px;
 	}
 	
+	/* Filter Styles */
+	#filter-box {
+		display:none;
+		position: fixed;
+		top: 48px;
+		width: 100%;
+		height:auto;
+		color: #EEE;
+		z-index: 20;
+		font-size: 130%;
+		line-height: 130%;
+		float: left;
+		padding: 18px;
+		background-color: rgba(0,0,0,0.8);
+	}
+	
+	#filter-box .filters {
+		width:50%;
+		float:left;
+		padding:10px;
+	}
+	
+	#filter-box label {
+	    font-size: 16px;
+		font-weight: normal;
+		color: #fff;
+	}
+	
+	#filter-box .filters .filter-input {
+		border:0; 
+		color:#f6931f; 
+		font-weight:bold;
+	}
+	
+	#filter-box #amount,
+	#filter-box #time,
+	#filter-box #amount2,
+	#filter-box #time2	{
+		border: none;
+		background: transparent;
+	}
+	
+	#filter-box .filter-slider {
+		width: 96%;
+		margin: 0px 10px 10px;
+	}
+	
 	/* Result Styles */
 	#result-box {
 		display: none;
 		width: 100%;
-		position:absolute;
+		position: absolute;
 		padding: 10px 10px;
-		z-index:19;
+		z-index: 19;
 		top: 100vh;
 		background:#333;
 	}
-		
-	#flight-results {
-		width:100%;
-		height:auto;
-		background-color:#CCC;
-		border:1px solid #CCC;
-		border-radius:5px;
-	}
-		
-	#flight-results tr th {
+	
+	#outward,
+	#return {
 		width:50%;
 		height:auto;
-		padding:5px;
-		background-color:#AAA;
-	}
-		
-	#flight-results tr td {
-		width:50%;
-		height:auto;
-		padding:5px;
-		background-color:#EEE;
-	}
-		
-	#flight-results tr td.flight-result-price {
-		background-color:#CCC;
-	}
-		
-	.outward-details,
-	.return-details	{
-		width:100%;
-		height:auto;
+		float:left;
+		padding: 5px;
 	}
 	
-	.outward-details img,
-	.return-details img	{
-		width: 100px;
-		height: auto;
+	#result-box .outward-flights,
+	#result-box .return-flights	{
+		width: 100%;
+		height: 50px;
+		display:inline-block;
+		font-size: 20px;
+		font-weight: bold;
+		color: #EEE;
+		background: #666;
+		padding: 5px;
+	}
+	
+	#result-box .price-field {
+		width: 100%;
+		height: 38px;
+		display: inline-block;
+		font-size: 18px;
+		color: #EEE;
+		padding: 5px;
+		background: #333;
+	}
+	
+	#result-box #outward-head,
+	#result-box #return-head	{
+		width: 100%;
+		height: 50px;
+		display: inline-block;
+	}
+	
+	#result-box #outward-head.fixed {
+		width: 48.66%;
+		position:fixed;
+		top:48px;
+		z-index:20;
+		left: 15px;
+		float: left;
+	}
+	
+	#result-box #return-head.fixed {
+		width: 48.66%;
+		position:fixed;
+		top:48px;
+		z-index:20;
+		right:15px;
+		float: right;
+	}
+	
+	#result-box .info-head {
+		width: 16.66%;
+		height: 50px;
+		padding: 5px;
+		font-size: 16px;
+		color: #333;
+		background-color: #CCC;
+		border: 1px solid #AAA;
+		display: inline-block;
+		float: left;
+	}
+	
+	#result-box .flight-block {
+		width:100%;
+		height:auto;
+		display:inline-block;
+	}
+	
+	#result-box .info-field {
+		width: 16.66%;
+		height: 90px;
+		padding: 5px;
+		font-size: 16px;
+		color: #333;
+		background-color: #EEE;
+		border: 1px solid #CCC;
+		display: inline-block;
+		float: left;
+	}
+	
+	#result-box .info-field a img {
+		width:85px;
+		height:auto;
 	}

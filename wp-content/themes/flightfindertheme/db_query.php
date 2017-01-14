@@ -13,8 +13,8 @@
 				$origin_airport_longitude = $row['longitude']; 
 				
 ?>
-				<div class="ap_item" align="left" value="<?php echo $origin_airport_iata; ?>" data-latitude="<?php echo $origin_airport_latitude; ?>" data-longitude="<?php echo $origin_airport_longitude; ?>">
-					<span class="ap_city"><?php echo $origin_airport_city; ?></span> - <span class="ap_name"><?php echo $origin_airport_name; ?></span> (<span class="ap_iata"><?php echo $origin_airport_iata; ?></span>)
+				<div class="ap_item" align="left" value="<?php echo $origin_airport_iata; ?>" data-latitude="<?php echo $origin_airport_latitude; ?>" data-longitude="<?php echo $origin_airport_longitude; ?>" data-city="<?php echo $origin_airport_city; ?>" data-name="<?php echo $origin_airport_name; ?>" data-iata="<?php echo $origin_airport_iata; ?>">
+					<?php echo $origin_airport_city; ?> - <?php echo $origin_airport_name; ?><?php if($origin_airport_iata != ''){echo ' ('. $origin_airport_iata .')';} ?>
 				</div>
 <?php
 			}
@@ -31,11 +31,10 @@
 				$dest_airport_longitude = $row['longitude']; 
 						
 ?>
-				<div align="left" value="<?php echo $dest_airport_iata; ?>" data-latitude="<?php echo $dest_airport_latitude; ?>" data-longitude="<?php echo $dest_airport_longitude; ?>">
-					<span class="ap_city"><?php echo $dest_airport_city; ?></span> - <span class="ap_name"><?php echo $dest_airport_name; ?></span> (<span class="ap_iata"><?php echo $dest_airport_iata; ?></span>)
+				<div class="ap_item" align="left" value="<?php echo $dest_airport_iata; ?>" data-latitude="<?php echo $dest_airport_latitude; ?>" data-longitude="<?php echo $dest_airport_longitude; ?>" data-city="<?php echo $dest_airport_city; ?>" data-name="<?php echo $dest_airport_name; ?>" data-iata="<?php echo $dest_airport_iata; ?>">
+					<?php echo $dest_airport_city; ?> - <?php echo $dest_airport_name; ?> <?php if($dest_airport_iata != ''){echo ' ('. $dest_airport_iata .')';} ?>
 				</div>
 <?php
 			}
 		}
-?>
 ?>

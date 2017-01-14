@@ -12,10 +12,11 @@
 									"childCount":'. $_POST['child'] .',
 									"seniorCount":'. $_POST['senior'] .'
 								},
-								"slice": ' . json_encode($slices) . ',
-								"solutions":' . 5 . ' 
+								"slice": ' . json_encode($slices) . '
 							}
 						}';
+				
+				//"solutions":' . 5 . ' 
 
 				$curlConnection = curl_init();
 				curl_setopt($curlConnection, CURLOPT_HTTPHEADER, array("Content-Type: application/json"));
@@ -34,21 +35,32 @@
 				return $results;
 			}
 			
-			if($_POST['origin'] != "" && $_POST['destination'] != "" && $_POST['outward-date'] != "" && $_POST['adult'] != 0 || $_POST['senior'] != 0) {
-				$slices = array(
-							array('origin' => $_POST['origin'], 
-							      'destination' => $_POST['destination'], 
-								  'date' => $_POST['outward-date'],
-								  'preferredCabin' => $_POST['booking-category']
-							), 						  
-							array('origin' => $_POST['destination'], 
-							      'destination' => $_POST['origin'], 
-								  'date' => $_POST['return-date'],
-								  'preferredCabin' => $_POST['booking-category']
-							));
-
-				$resultAsArray = getInformation($slices);
+			if(isset($_POST['one-way-flight'])) {
+				if($_POST['origin'] != "" && $_POST['outward-date'] != "" && $_POST['adult'] != 0 || $_POST['senior'] != 0) {
+					$slices = array(
+								array('origin' => $_POST['origin'], 
+								  'destination' => $_POST['destination'], 
+									  'date' => $_POST['outward-date'],
+									  'preferredCabin' => $_POST['booking-category']
+								));
+				}
+			} else {
+				if($_POST['origin'] != "" && $_POST['destination'] != "" && $_POST['outward-date'] != "" && $_POST['adult'] != 0 || $_POST['senior'] != 0) {
+					$slices = array(
+								array('origin' => $_POST['origin'], 
+									  'destination' => $_POST['destination'], 
+									  'date' => $_POST['outward-date'],
+									  'preferredCabin' => $_POST['booking-category']
+								), 						  
+								array('origin' => $_POST['destination'], 
+									  'destination' => $_POST['origin'], 
+									  'date' => $_POST['return-date'],
+									  'preferredCabin' => $_POST['booking-category']
+								));
+				}
 			}
+
+			$resultAsArray = getInformation($slices);
 
 			if($resultAsArray != null) {
 				$trips = array_filter($resultAsArray['trips']['tripOption'], function($kind) {
@@ -61,63 +73,139 @@
 						return false;
 				});
 				
-				print '<table id="flight-results">';
-				print '<tr><th>Outward-Flight: </th><th>Return-Flight: </th></tr>';
-				foreach ($trips as $trip) {
-					print '<tr><td class="flight-result-price">Offer: ' . $trip['saleTotal'] . '</td></tr>';
-					print "<tr>";
+				$curr_price = 'EUR0.00';
+				$outward_flights = array();
+				$flights1 = array();
+				
+				foreach ($trips as $trip) {				
+					
 					foreach ($trip['slice'] as $index => $slice) {
-						print "<td>";
+						
+						//Outward
 						if($index == 0) {
-							print '<table class="outward-details">';
-							print "<tr><td><strong>Flight: </strong></td><td><span><strong>FROM</strong> " . $slices[$index]['origin'] . " <strong>TO</strong> " . $slices[$index]['destination'] . "</span></td></tr>";
+							
 							foreach ($slice['segment'] as $segment) {
-								$airline = $segment['flight']['carrier'];
-								$sql_res = mysql_query("select airline_name,iata,image_path,booking_link from airlines where iata like '$airline%'");
-								$row = mysql_fetch_array($sql_res);
-								print '<tr><td><strong>Airline: </strong></td><td><a href="'. $row['booking_link'] .'" target="_blanket"><img src="http://localhost:8080/flight-finder'. $row['image_path'] . '"><br>'. $row['airline_name'] .' ('. $segment['flight']['carrier'] .')</a></td></tr>';
-								foreach ($segment['leg'] as $leg) {
-									$departure = new DateTime($leg['departureTime']);
-									$departure = $departure->format('d.m.Y - H:i');
-									$arrival = new DateTime($leg['arrivalTime']);
-									$arrival = $arrival->format('d.m.Y - H:i');
-									print "<tr><td><strong>Departure: </strong></td><td><span>" . $departure . " Uhr</span></td></tr>";
-									print "<tr><td><strong>Arrival: </strong></td><td><span>" . $arrival . " Uhr</span></td></tr>";
-									print "<tr><td><strong>Duration: </strong></td><td><span>" . $leg['duration'] . " min.</span></td></tr>";
-									print "<tr><td><strong>Further Information:</strong></td><td></td></tr>";
+								
+								if(!in_array($segment['flight']['number'] . $trip['saleTotal'], $outward_flights)) {
+									
+									//Push flight+price to array to save that it is already printed to the user
+									array_push($outward_flights, $segment['flight']['number'] . $trip['saleTotal']);
+									
+									//Airline
+									$airline = $segment['flight']['carrier'];
+									$sql_res = mysql_query("select airline_name,iata,image_path,booking_link from airlines where iata like '$airline%'");
+									$row = mysql_fetch_array($sql_res);
+									
+									foreach ($segment['leg'] as $leg) {
+										
+										//Departure & Arrival
+										$departure = new DateTime($leg['departureTime']);
+										$departure = $departure->format('d.m.Y - H:i');
+										$arrival = new DateTime($leg['arrivalTime']);
+										$arrival = $arrival->format('d.m.Y - H:i');
+									}
+									
+									array_push($flights1, array(
+											'price' => substr($trip['saleTotal'], 3),
+											'flightnum' => $segment['flight']['number'],
+											'airline_iata' => $segment['flight']['carrier'],
+											'airline_name' => $row['airline_name'],
+											'airline_link' => $row['booking_link'],
+											'airline_image' => 'http://localhost:8080/flight-finder'. $row['image_path'],
+											'origin' => $slices[$index]['origin'],
+											'destination' => $slices[$index]['destination'],
+											'departure' => $departure,
+											'arrival' => $arrival,
+											'duration' => $leg['duration'],
+											'cabin' => $segment['cabin']));
+									
+									$price = array();
+									$departure_time = array();									
+									foreach ($flights1 as $key => $row) {
+										$price[$key]  = $row['price'];
+										$departure_time[$key] = $row['departure'];
+									}
+
+									// Sort the data
+									array_multisort($price, SORT_ASC, $departure_time, SORT_ASC, $flights1);
+								
+								} else {
+									//do nothing as the flight is already printed
 								}
-								print "<tr><td><strong>Cabin: </strong></td><td><span>" . $segment['cabin'] . "</span></td></tr>";
 							}
-							print "</table>";
-						print "</td>";
-						} else {
-							print '<table class="return-details"><tr>';
-							print "<tr><td><strong>Flight: </strong></td><td><span><strong>FROM</strong> " . $slices[$index]['origin'] . " <strong>TO</strong> " . $slices[$index]['destination'] . "</span></td></tr>";
-							print "<tr><td></td><td></td></tr>";
-							foreach ($slice['segment'] as $segment) {	
-								$airline = $segment['flight']['carrier'];
-								$sql_res = mysql_query("select airline_name,iata,image_path,booking_link from airlines where iata like '$airline%'");
-								$row = mysql_fetch_array($sql_res);
-								print '<tr><td><strong>Airline: </strong></td><td><a href="'. $row['booking_link'] .'" target="_blanket"><img src="http://localhost:8080/flight-finder' . $row['image_path'] . '"><br>'. $row['airline_name'] .' ('. $segment['flight']['carrier'] .')</a></td></tr>';
-								foreach ($segment['leg'] as $leg) {
-									$departure = new DateTime($leg['departureTime']);
-									$departure = $departure->format('d.m.Y - H:i');
-									$arrival = new DateTime($leg['arrivalTime']);
-									$arrival = $arrival->format('d.m.Y - H:i');
-									print "<tr><td><strong>Departure: </strong></td><td><span>" . $departure . " Uhr</span></td></tr>";
-									print "<tr><td><strong>Arrival: </strong></td><td><span>" . $arrival . " Uhr</span></td></tr>";
-									print "<tr><td><strong>Duration: </strong></td><td><span>" . $leg['duration'] . " min.</span></td></tr>";
-									print "<tr><td><strong>Further Information:</strong></td><td></td></tr>";
-								}
-								print "<tr><td><strong>Cabin: </strong></td><td><span>" . $segment['cabin'] . "</span></td></tr>";
-							}
-							print "</table>";
-						print "</td>";							
 						}
 					}
-					echo "</tr>";
-				}
-				print '</table>';
+				}							
+				
+				$curr_price2 = 'EUR0.00';
+				$return_flights = array();
+				$flights2 = array();
+				
+				foreach ($trips as $trip) {				
+					
+					foreach ($trip['slice'] as $index => $slice) {
+						
+						//Return
+						if($index != 0) {
+							
+							foreach ($slice['segment'] as $segment) {
+								
+								if(!in_array($segment['flight']['number'] . $trip['saleTotal'], $return_flights)) {
+									
+									//Push flight+price to array to save that it is already printed to the user
+									array_push($return_flights, $segment['flight']['number'] . $trip['saleTotal']);
+									
+									//Airline
+									$airline = $segment['flight']['carrier'];
+									$sql_res = mysql_query("select airline_name,iata,image_path,booking_link from airlines where iata like '$airline%'");
+									$row = mysql_fetch_array($sql_res);
+									
+									foreach ($segment['leg'] as $leg) {
+										
+										//Departure & Arrival
+										$departure = new DateTime($leg['departureTime']);
+										$departure = $departure->format('d.m.Y - H:i');
+										$arrival = new DateTime($leg['arrivalTime']);
+										$arrival = $arrival->format('d.m.Y - H:i');
+									}
+									
+									array_push($flights2, array(
+											'price' => substr($trip['saleTotal'], 3),
+											'flightnum' => $segment['flight']['number'],
+											'airline_iata' => $segment['flight']['carrier'],
+											'airline_name' => $row['airline_name'],
+											'airline_link' => $row['booking_link'],
+											'airline_image' => 'http://localhost:8080/flight-finder'. $row['image_path'],
+											'origin' => $slices[$index]['origin'],
+											'destination' => $slices[$index]['destination'],
+											'departure' => $departure,
+											'arrival' => $arrival,
+											'duration' => $leg['duration'],
+											'cabin' => $segment['cabin']));
+											
+									$price = array();
+									$departure_time = array();
+									foreach ($flights2 as $key => $row) {
+										$price[$key]  = $row['price'];
+										$departure_time[$key] = $row['departure'];
+									}
+
+									// Sort the data
+									array_multisort($price, SORT_ASC, $departure_time, SORT_ASC, $flights2);
+								
+								} else {
+									//do nothing as the flight is already printed
+								}
+							}
+						}
+					}
+				}				
+				
+				$flights = array();
+				$flights['outward'] = $flights1;
+				$flights['return'] = $flights2;
+				
+				echo json_encode($flights);
 			}
 		}
 		?>

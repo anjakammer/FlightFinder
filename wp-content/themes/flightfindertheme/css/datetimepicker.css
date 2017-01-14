@@ -9,7 +9,7 @@
 .bootstrap-datetimepicker-widget.dropdown-menu {
   margin: 2px 0;
   padding: 4px;
-  width: 21.5em;
+  width: 24.5em;
 }
 @media (min-width: 768px) {
   .bootstrap-datetimepicker-widget.dropdown-menu.timepicker-sbs {

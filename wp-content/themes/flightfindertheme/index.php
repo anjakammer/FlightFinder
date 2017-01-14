@@ -1,11 +1,11 @@
-<?php get_header(); ?>
+	<?php get_header(); ?>
 	
 	<div id="map"></div>
 	
-	<div id="search-box" style="margin-top:50px;">
-		<label>One-Way-Flight: </label>
-		<input type="checkbox" name="one-way-flight" id="one-way-flight" />
+	<div id="search-box">
 		<form id="search-form" name="search-form" action="" method="post" onsubmit="return validateForm()">
+				<label>One-Way-Flight: </label>
+				<input type="checkbox" name="one-way-flight" id="one-way-flight" />
 				<div class="form-group">
 					<input type="text" placeholder="Origin Airport" name="origin" id="origin" class="origin_input" />
 					<div id="origin-results"></div>
@@ -20,7 +20,7 @@
 					<div class="date-input">
 						<div class='input-group date' id='datetimepicker'>
 							<input type="date" placeholder="Outward Date" name="outward-date" id="outward-date" class="form-control" />
-							<span class="input-group-addon" style="float:none;">
+							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
 							<span class="error outward-date">Please select an outward-date.</span>
@@ -29,7 +29,7 @@
 					<div class="date-input">	
 						<div class='input-group date' id='datetimepicker1'>
 							<input type="date" placeholder="Return Date" name="return-date" id="return-date" class="form-control" />
-							<span class="input-group-addon" style="float:none;">
+							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
 							<span class="error return-date">Please select a return-date.</span>
@@ -53,11 +53,46 @@
 					</select>
 				</div>
 
-				<input id="submit-flight-request" type="submit" value="Search Flights">
+				<input id="submit-flight-request" type="submit" value="Search">
 		</form>
 	</div>
 	
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqXVnrgrwAEb5XqokfoNhGR9USsonp5iQ&signed_in=true&callback=initMap&signed_in=false"></script>	
+	<div id="filter-box">
+		<div class="filters outward">
+			<div class="price-filter">
+				<p>
+					<label for="amount">Outward-Price:</label>
+					<input type="text" id="amount" class="filter-input" readonly>
+				</p> 
+				<div id="price-range" class="filter-slider"></div>
+			</div>
+			<div class="time-filter">
+				<p>
+					<label for="time">Departure-Time:</label>
+					<input type="text" id="time" class="filter-input" readonly>
+				</p> 
+				<div id="time-range" class="filter-slider"></div>
+			</div>
+		</div>
+		<div class="filters return">
+			<div class="price-filter">
+				<p>
+					<label for="amount">Return-Price:</label>
+					<input type="text" id="amount2" class="filter-input" readonly>
+				</p> 
+				<div id="price-range2" class="filter-slider"></div>
+			</div>
+			<div class="time-filter">
+				<p>
+					<label for="time">Departure-Time:</label>
+					<input type="text" id="time2" class="filter-input" readonly>
+				</p> 
+				<div id="time-range2" class="filter-slider"></div>
+			</div>
+		</div>
+	</div>
+	
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqXVnrgrwAEb5XqokfoNhGR9USsonp5iQ&callback=initMap"></script>	
 	<script>
 		var firstSearch = true;
 		var markers = [];
@@ -173,14 +208,49 @@
 			reloadMarker();
 		}
 	</script>
+	<script>
+		$("#one-way-flight").attr('checked', $("#return-date")[0].disabled);
+		$("#one-way-flight").click(function(){   
+			$("#return-date").attr('disabled', this.checked)
+		});
+	</script>
 		
 	<div id="result-box">
-		<table>
-			<thead>
-				<tr>
-					<td>
-	
+		<div id="outward">
+			<div class="outward-flights">OUTWARD-FLIGHTS</div>
+			<div id="outward-head" class="">
+				<div class="info-head"><strong>AIRLINE</strong></div>
+				<div class="info-head"><strong>ORIGIN</strong></div>
+				<div class="info-head"><strong>DESTINATION</strong></div>
+				<div class="info-head"><strong>DEPARTURE</strong></div>
+				<div class="info-head"><strong>ARRIVAL</strong></div>
+				<div class="info-head"><strong>DURATION</strong></div>
+			</div>
+		</div>
+		<div id="return">
+			<div class="return-flights">RETURN-FLIGHTS</div>
+			<div id="return-head" class="">
+				<div class="info-head"><strong>AIRLINE</strong></div>
+				<div class="info-head"><strong>ORIGIN</strong></div>
+				<div class="info-head"><strong>DESTINATION</strong></div>
+				<div class="info-head"><strong>DEPARTURE</strong></div>
+				<div class="info-head"><strong>ARRIVAL</strong></div>
+				<div class="info-head"><strong>DURATION</strong></div>
+			</div>
+		</div>
 	</div>
+	
+	<script>
+		/*$( document ).ready(function() {
+			var outwardFlights = JSON.parse(localStorage.getItem("outward"));
+			var returnFlights = JSON.parse(localStorage.getItem("return"));
+							 
+			createFlightInfo(outwardFlights,'outward');
+			createFlightInfo(returnFlights,'return');
+							  
+			$('#result-box').css('display', 'block');
+		});*/
+	</script>
 
 	<?php get_footer(); ?>
 

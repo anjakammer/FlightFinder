@@ -18,10 +18,10 @@
 								return false;    
 							});
 
-							jQuery("#origin-results").live("click",function(e){ 
+							$("#origin-results").on("click",function(e){ 
 								var $clicked = $(e.target);
-								var ap_city = $clicked.find('.ap_city').html();
-								var ap_iata = $clicked.find('.ap_iata').html();
+								var ap_city = $clicked.attr('data-city');
+								var ap_iata = $clicked.attr('data-iata');
 								var ap_latitude = $clicked.attr('data-latitude');
 								var ap_longitude = $clicked.attr('data-longitude');
 								//set text and attributes
@@ -31,7 +31,7 @@
 								$('#origin').attr("data-longitude", ap_longitude);
 							});
 							
-							jQuery(document).live("click", function(e) { 
+							$(document).on("click", function(e) { 
 								var $clicked = $(e.target);
 								if (! $clicked.hasClass("origin_input")){
 									jQuery("#origin-results").fadeOut(); 
@@ -59,10 +59,10 @@
 								return false;    
 							});
 
-							jQuery("#destination-results").live("click",function(e){ 
+							$("#destination-results").on("click",function(e){ 
 								var $clicked = $(e.target);
-								var ap_city = $clicked.find('.ap_city').html();
-								var ap_iata = $clicked.find('.ap_iata').html();
+								var ap_city = $clicked.attr('data-city');
+								var ap_iata = $clicked.attr('data-iata');
 								var ap_latitude = $clicked.attr('data-latitude');
 								var ap_longitude = $clicked.attr('data-longitude');
 								//set text and attributes
@@ -72,7 +72,7 @@
 								$('#destination').attr("data-longitude", ap_longitude);
 							});
 							
-							jQuery(document).live("click", function(e) { 
+							$(document).on("click", function(e) { 
 								var $clicked = $(e.target);
 								if (! $clicked.hasClass("dest_input")){
 									jQuery("#destination-results").fadeOut(); 
