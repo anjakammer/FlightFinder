@@ -1,29 +1,31 @@
 <?php
 /**
- * Twenty Fifteen functions and definitions
+ * Flight-Finder-Theme functions and definitions
  */
  
 /* Scripts should be inserted in <head> */
-function head_scripts() {
-	echo '<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-		  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
-	      <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
-		  <script src="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/js/datetimepicker.js"></script>
-		  <script src="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/js/autocomplete.js"></script>
-		  <script src="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/js/form-validation.js"></script>
-		  <script src="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/js/flight-request.js"></script>
-		  <script src="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/js/resultFilter.js"></script>';
+function add_theme_scripts() {
+	//Scripts
+	wp_enqueue_script('jquery-js', get_template_directory_uri() . '/js/jquery-2.4.1.min.js');
+	wp_enqueue_script('jquery-ui-js', get_template_directory_uri() . '/js/jquery-ui.min.js');
+	wp_enqueue_script('bootstrap-js', get_template_directory_uri() . '/js/bootstrap.min.js');
+	wp_enqueue_script('moment-js', get_template_directory_uri() . '/js/moment.min.js');
+	wp_enqueue_script('moment-with-locales-js', get_template_directory_uri() . '/js/moment-with-locales.js');
+	wp_enqueue_script('datetimepicker-js', get_template_directory_uri() . '/js/datetimepicker.js');
+	wp_enqueue_script('autocomplete-js', get_template_directory_uri() . '/js/autocomplete.js');
+	wp_enqueue_script('form-validation-js', get_template_directory_uri() . '/js/form-validation.js');
+	wp_enqueue_script('result-filter-js', get_template_directory_uri() . '/js/resultFilter.js');
+	wp_enqueue_script('picker-and-slider-js', get_template_directory_uri() . '/js/pickerAndSlider.js');
+	
+	//Footer Scripts
+	wp_enqueue_script('map-js', get_template_directory_uri() . '/js/map.js', '', '', 'in_footer');
+	wp_enqueue_script('flight-request-js', get_template_directory_uri() . '/js/flight-request.js', '', '', 'in_footer');
+	
+	//Styles
+	wp_enqueue_style('jquery-ui-css', get_template_directory_uri() . '/css/jquery-ui.css');
+	wp_enqueue_style('font-css', get_template_directory_uri() . '/css/font.css');
+	wp_enqueue_style('bootstrap-css', get_template_directory_uri() . '/css/bootstrap.css');
+	wp_enqueue_style('font-awesome-css', get_template_directory_uri() . '/css/font-awesome.css');
+	wp_enqueue_style('datetimepicker-css', get_template_directory_uri() . '/css/datetimepicker.css');
 }
-add_action('wp_head', 'head_scripts');
-
-/* Stylesheets should be inserted in <head> */
-function head_stylesheets() {
-	echo '<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
-		  <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet" type="text/css" media="screen" />
-		  <link href="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/css/bootstrap.css" rel="stylesheet" type="text/css" />
-		  <link href="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/css/font-awesome.css" rel="stylesheet" type="text/css" />
-		  <link href="http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/css/datetimepicker.css" rel="stylesheet" type="text/css" />';
-}
-add_action('wp_head', 'head_stylesheets');
+add_action('wp_enqueue_scripts', 'add_theme_scripts');

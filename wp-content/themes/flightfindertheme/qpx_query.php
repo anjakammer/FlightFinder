@@ -1,5 +1,6 @@
 <?php			
-		include('db_connect.php');
+		require_once('../../../wp-config.php');
+		global $wpdb;
 		
 		if(isset($_POST)){	
 			function getInformation($slices) {
@@ -93,8 +94,15 @@
 									
 									//Airline
 									$airline = $segment['flight']['carrier'];
-									$sql_res = mysql_query("select airline_name,iata,image_path,booking_link from airlines where iata like '$airline%'");
-									$row = mysql_fetch_array($sql_res);
+									$results = $wpdb->get_results("SELECT airline_name,iata,image_path,booking_link FROM airlines WHERE iata LIKE '$airline%'");
+									$airline_name = '';
+									$airline_image = '';
+									$airline_link = '';
+									foreach($results as $key => $row) {
+										$airline_name = $row->airline_name;
+										$airline_image = $row->image_path;
+										$airline_link = $row->booking_link;
+									}
 									
 									foreach ($segment['leg'] as $leg) {
 										
@@ -109,9 +117,9 @@
 											'price' => substr($trip['saleTotal'], 3),
 											'flightnum' => $segment['flight']['number'],
 											'airline_iata' => $segment['flight']['carrier'],
-											'airline_name' => $row['airline_name'],
-											'airline_link' => $row['booking_link'],
-											'airline_image' => 'http://localhost:8080/flight-finder'. $row['image_path'],
+											'airline_name' => $airline_name,
+											'airline_link' => $airline_link,
+											'airline_image' => 'http://localhost:8080/flight-finder'. $airline_image,
 											'origin' => $slices[$index]['origin'],
 											'destination' => $slices[$index]['destination'],
 											'departure' => $departure,
@@ -157,8 +165,15 @@
 									
 									//Airline
 									$airline = $segment['flight']['carrier'];
-									$sql_res = mysql_query("select airline_name,iata,image_path,booking_link from airlines where iata like '$airline%'");
-									$row = mysql_fetch_array($sql_res);
+									$results = $wpdb->get_results("SELECT airline_name,iata,image_path,booking_link FROM airlines WHERE iata LIKE '$airline%'");
+									$airline_name = '';
+									$airline_image = '';
+									$airline_link = '';
+									foreach($results as $key => $row) {
+										$airline_name = $row->airline_name;
+										$airline_image = $row->image_path;
+										$airline_link = $row->booking_link;
+									}
 									
 									foreach ($segment['leg'] as $leg) {
 										
@@ -173,9 +188,9 @@
 											'price' => substr($trip['saleTotal'], 3),
 											'flightnum' => $segment['flight']['number'],
 											'airline_iata' => $segment['flight']['carrier'],
-											'airline_name' => $row['airline_name'],
-											'airline_link' => $row['booking_link'],
-											'airline_image' => 'http://localhost:8080/flight-finder'. $row['image_path'],
+											'airline_name' => $airline_name,
+											'airline_link' => $airline_link,
+											'airline_image' => 'http://localhost:8080/flight-finder'. $airline_image,
 											'origin' => $slices[$index]['origin'],
 											'destination' => $slices[$index]['destination'],
 											'departure' => $departure,

@@ -1,10 +1,11 @@
 	<?php get_header(); ?>
 	
 	<div id="map"></div>
-	
+	<div id="loading-overlay"></div>
+	<img id="loading" src="<?php echo home_url() . '/wp-content/uploads/airlines/loading.gif'; ?>"/>
 	<div id="search-box">
 		<form id="search-form" name="search-form" action="" method="post" onsubmit="return validateForm()">
-				<label>One-Way-Flight: </label>
+				<label>One-Way-Flight </label>
 				<input type="checkbox" name="one-way-flight" id="one-way-flight" />
 				<div class="form-group">
 					<input type="text" placeholder="Origin Airport" name="origin" id="origin" class="origin_input" />
@@ -61,14 +62,14 @@
 		<div class="filters outward">
 			<div class="price-filter">
 				<p>
-					<label for="amount">Outward-Price:</label>
+					<label for="amount">Outward</label>
 					<input type="text" id="amount" class="filter-input" readonly>
 				</p> 
 				<div id="price-range" class="filter-slider"></div>
 			</div>
 			<div class="time-filter">
 				<p>
-					<label for="time">Departure-Time:</label>
+					<label for="time">Departure:</label>
 					<input type="text" id="time" class="filter-input" readonly>
 				</p> 
 				<div id="time-range" class="filter-slider"></div>
@@ -77,143 +78,20 @@
 		<div class="filters return">
 			<div class="price-filter">
 				<p>
-					<label for="amount">Return-Price:</label>
+					<label for="amount">Return</label>
 					<input type="text" id="amount2" class="filter-input" readonly>
 				</p> 
 				<div id="price-range2" class="filter-slider"></div>
 			</div>
 			<div class="time-filter">
 				<p>
-					<label for="time">Departure-Time:</label>
+					<label for="time">Departure:</label>
 					<input type="text" id="time2" class="filter-input" readonly>
 				</p> 
 				<div id="time-range2" class="filter-slider"></div>
 			</div>
 		</div>
 	</div>
-	
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAqXVnrgrwAEb5XqokfoNhGR9USsonp5iQ&callback=initMap"></script>	
-	<script>
-		var firstSearch = true;
-		var markers = [];
-		var flightpath ;
-		var map;
-		var iconBase = '<?php echo get_template_directory_uri(); ?>/img/';
-
-		var to_airport = $('#destination');
-		var from_airport = $('#origin');
-
-		var to_lat = 0;
-		var to_long = 0;
-
-		var from_lat = 0;
-		var from_long = 0;
-
-		var to = to_airport.val();
-		var from = from_airport.val();
-
-
-		function initMap() {
-			map = new google.maps.Map(document.getElementById('map'), {
-				zoom: 4,
-				center: {lat: 45.6906294, lng: 26.2947221},
-				mapTypeControl: false,
-				draggable: false,
-				scaleControl: false,
-				scrollwheel: false,
-				navigationControl: false,
-				streetViewControl: false,
-				mapTypeId: google.maps.MapTypeId.SATELLITE,
-				zoomControlOptions: {
-					position: google.maps.ControlPosition.LEFT_BOTTOM
-				}
-			});
-		}
-
-		var reloadMarker = function() {
-
-			var flightPlanCoordinates = [
-				// To Airport
-				{lat: to_lat, lng: to_long},
-				// From Airport
-				{lat: from_lat, lng: from_long}
-			];
-
-			var lineSymbol = {
-				path: 'M 0,-1 0,1',
-				strokeOpacity: 0.8,
-				scale: 2,
-				strokeColor: '#FFFFFF'
-			};
-
-			flightPath = new google.maps.Polyline({
-				path: flightPlanCoordinates,
-				strokeOpacity: 0,
-				icons: [{
-					icon: lineSymbol,
-					offset: '0',
-					repeat: '10px'
-				}]
-			});
-
-			flightPath.setMap(map);
-
-			// To Airport
-			marker = new google.maps.Marker({
-				map: map,
-				draggable: false,
-				animation: google.maps.Animation.DROP,
-				position: {lat: to_lat, lng: to_long},
-				icon: iconBase + 'map-pointer-to.png'
-			});
-			markers.push(marker);
-
-			// From Airport
-			marker = new google.maps.Marker({
-				map: map,
-				draggable: false,
-				animation: google.maps.Animation.DROP,
-				position: {lat: from_lat, lng: from_long},
-				icon: iconBase + 'map-pointer-from.png'
-			});
-
-			markers.push(marker);
-
-			function toggleBounce() {
-				if (marker.getAnimation() !== null) {
-					marker.setAnimation(null);
-				} else {
-					marker.setAnimation(google.maps.Animation.BOUNCE);
-				}
-			}
-			firstSearch = false;
-		};
-
-		function removeFlight()
-		{
-			for (var i = 0; i < markers.length; i++) {
-				markers[i].setMap(null);
-			}
-			flightPath.setMap(null);
-		}
-		
-		function setMarkers(lat_from, long_from, lat_to, long_to) {
-			to_lat = parseFloat(lat_to);
-			to_long = parseFloat(long_to);
-			from_lat = parseFloat(lat_from);
-			from_long = parseFloat(long_from);
-			if(!firstSearch){
-				removeFlight();
-			}
-			reloadMarker();
-		}
-	</script>
-	<script>
-		$("#one-way-flight").attr('checked', $("#return-date")[0].disabled);
-		$("#one-way-flight").click(function(){   
-			$("#return-date").attr('disabled', this.checked)
-		});
-	</script>
 		
 	<div id="result-box">
 		<div id="outward">
@@ -239,19 +117,5 @@
 			</div>
 		</div>
 	</div>
-	
-	<script>
-		/*$( document ).ready(function() {
-			var outwardFlights = JSON.parse(localStorage.getItem("outward"));
-			var returnFlights = JSON.parse(localStorage.getItem("return"));
-							 
-			createFlightInfo(outwardFlights,'outward');
-			createFlightInfo(returnFlights,'return');
-							  
-			$('#result-box').css('display', 'block');
-		});*/
-	</script>
 
 	<?php get_footer(); ?>
-
-

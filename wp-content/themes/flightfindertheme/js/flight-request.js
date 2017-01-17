@@ -3,6 +3,8 @@
         $('#search-form').on('submit', function (e) {
 			
 			$("#submit-flight-request").prop('value', 'Loading...');
+			$("#loading-overlay").css('display', 'block');
+			$("#loading").css('display', 'block');
 			
 			var from_airport = $("#origin").val();
 			var to_airport = $("#destination").val();
@@ -16,7 +18,7 @@
 			var latitude_to = $("#destination").attr("data-latitude");
 			var longitude_to = $("#destination").attr("data-longitude");
 
-			var url = "http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/qpx_query.php";
+			var url = window.location.href + "/wp-content/themes/flightfindertheme/qpx_query.php";
 			
 			if (to_airport != '' && from_airport != '' && outward_date != '' && return_date != '' && adults != '' || seniors != '') {
 				$.ajax({
@@ -27,6 +29,8 @@
 					   cache: false,
 					   beforeSend: function () {
 						   $("#submit-flight-request").prop('value', 'Loading...');
+						   $("#loading-overlay").css('display', 'block');
+						   $("#loading").css('display', 'block');
 					   },
 					   success: function(data)
 					   {
@@ -35,14 +39,18 @@
 						 
 						   createFlightInfo(outwardFlights,'outward');
 						   createFlightInfo(returnFlights,'return');
-						  
+						   
+						   $("#loading-overlay").css('display', 'none');
+						   $("#loading").css('display', 'none');
 						   $('#result-box').css('display', 'block');
-						   $('#switch-filter').css('display', 'block');						   
+						   $('#filter-box').fadeIn( "slow" );							   
 						   $("#submit-flight-request").prop('value', 'Search');   
 						   setMarkers(latitude_from, longitude_from, latitude_to, longitude_to);
 						   
-						   localStorage.setItem("outward", JSON.stringify(outwardFlights));
+						   /*localStorage.setItem("outward", JSON.stringify(outwardFlights));
 						   localStorage.setItem("return", JSON.stringify(returnFlights));
+						   var outwardFlights = JSON.parse(localStorage.getItem("outward"));
+						   var returnFlights = JSON.parse(localStorage.getItem("return"));*/
 					   }
 				});
 			}
