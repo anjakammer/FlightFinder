@@ -3,6 +3,9 @@
  * Flight-Finder-Theme functions and definitions
  */
  
+//require('db_query.php');
+//require('qpx_query.php'); 
+ 
 /* Scripts should be inserted in <head> */
 function add_theme_scripts() {
 	//Scripts

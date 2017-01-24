@@ -11,7 +11,6 @@
 			var outward_date = $("#outward-date").val();
 			var return_date = $("#return-date").val();
 			var adults = $("#adult").val();
-			var childs = $("#child").val();
 			var seniors = $("#senior").val();
 			var latitude_from = $("#origin").attr("data-latitude");
 			var longitude_from = $("#origin").attr("data-longitude");
@@ -61,7 +60,6 @@
 	function createFlightInfo(element,flight) {
 		var last_price = '';
 		var id = '';
-		var activeClass = '';
 		
 		if(flight == 'outward') {
 			id = '#outward';
@@ -100,13 +98,13 @@
 		var field = document.createElement("div");
 		$( field ).addClass('info-field');
 		if(type == 'dat') {
-			$( field ).append(element + ' Uhr');
+			$( field ).append(element + " o'clock");
 			$( field ).addClass('departure');
 		} else if(type == 'dat2') {
-			$( field ).append(element + ' Uhr');
+			$( field ).append(element + " o'clock");
 			$( field ).addClass('arrival');
 		} else if(type == 'dur') {
-			$( field ).append(element + ' min');
+			$( field ).append(element + " o'clock");
 			$( field ).addClass('duration');
 		} else {
 			$( field ).append(element);
