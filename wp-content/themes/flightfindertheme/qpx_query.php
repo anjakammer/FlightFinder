@@ -37,25 +37,25 @@
 			}
 			
 			if(isset($_POST['one-way-flight'])) {
-				if($_POST['origin'] != "" && $_POST['outward-date'] != "" && $_POST['adult'] != 0 || $_POST['senior'] != 0) {
+				if($_POST['origin'] != "" && $_POST['outward_date'] != "" && $_POST['adult'] != 0 || $_POST['senior'] != 0) {
 					$slices = array(
 								array('origin' => $_POST['origin'], 
-								  'destination' => $_POST['destination'], 
-									  'date' => $_POST['outward-date'],
+									  'destination' => $_POST['destination'], 
+									  'date' => $_POST['outward_date'],
 									  'preferredCabin' => $_POST['booking-category']
 								));
 				}
 			} else {
-				if($_POST['origin'] != "" && $_POST['destination'] != "" && $_POST['outward-date'] != "" && $_POST['adult'] != 0 || $_POST['senior'] != 0) {
+				if($_POST['origin'] != "" && $_POST['destination'] != "" && $_POST['outward_date'] != "" && $_POST['adult'] != 0 || $_POST['senior'] != 0) {
 					$slices = array(
 								array('origin' => $_POST['origin'], 
 									  'destination' => $_POST['destination'], 
-									  'date' => $_POST['outward-date'],
+									  'date' => $_POST['outward_date'],
 									  'preferredCabin' => $_POST['booking-category']
 								), 						  
 								array('origin' => $_POST['destination'], 
 									  'destination' => $_POST['origin'], 
-									  'date' => $_POST['return-date'],
+									  'date' => $_POST['return_date'],
 									  'preferredCabin' => $_POST['booking-category']
 								));
 				}

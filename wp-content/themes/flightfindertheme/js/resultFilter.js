@@ -1,9 +1,9 @@
 	//Time filtering
 	function filterTime(minHours, minMinutes, maxHours, maxMinutes, flight) {
 		if(flight == 'outward') {
-			$("#outward .flight-block").hide().filter(function () {
+			$("#outward .single-flight").hide().filter(function () {
 				var datetime = $(this).find( ".departure" ).html();
-				datetime = datetime.slice(12, datetime.length-4);
+				datetime = datetime.slice(12, datetime.length);
 				var time = datetime.slice(0,3) + datetime.substr(datetime.length-2,datetime.length);
 				time = parseInt(time, 10);
 				var minTime = parseInt(minHours.toString() + minMinutes.toString(), 10);
@@ -12,9 +12,9 @@
 			}).show();
 		}
 		if(flight == 'return') {
-			$("#return .flight-block").hide().filter(function () {
+			$("#return .single-flight").hide().filter(function () {
 				var datetime = $(this).find( ".departure" ).html();
-				datetime = datetime.slice(12, datetime.length-4);
+				datetime = datetime.slice(12, datetime.length);
 				var time = datetime.slice(0,3) + datetime.substr(datetime.length-2,datetime.length);
 				time = parseInt(time, 10);
 				var minTime = parseInt(minHours.toString() + minMinutes.toString(), 10);

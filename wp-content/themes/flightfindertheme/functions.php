@@ -16,7 +16,6 @@ function add_theme_scripts() {
 	wp_enqueue_script('moment-with-locales-js', get_template_directory_uri() . '/js/moment-with-locales.js');
 	wp_enqueue_script('datetimepicker-js', get_template_directory_uri() . '/js/datetimepicker.js');
 	wp_enqueue_script('autocomplete-js', get_template_directory_uri() . '/js/autocomplete.js');
-	wp_enqueue_script('form-validation-js', get_template_directory_uri() . '/js/form-validation.js');
 	wp_enqueue_script('result-filter-js', get_template_directory_uri() . '/js/resultFilter.js');
 	wp_enqueue_script('picker-and-slider-js', get_template_directory_uri() . '/js/pickerAndSlider.js');
 	

@@ -4,48 +4,47 @@
 	<div id="loading-overlay"></div>
 	<img id="loading" src="<?php echo home_url() . '/wp-content/uploads/airlines/loading.gif'; ?>"/>
 	<div id="search-box">
-		<form id="search-form" name="search-form" action="" method="post" onsubmit="return validateForm()">
-				<label>One-Way-Flight </label>
-				<input type="checkbox" name="one-way-flight" id="one-way-flight" />
-				<div class="form-group">
-					<input type="text" placeholder="Origin Airport" name="origin" id="origin" class="origin_input" />
-					<div id="origin-results"></div>
-					<span class="error origin">Please set an origin-airport.</span>
+		<form id="search-form" name="search-form" action="" method="post">
+				<label style="float:left;">One-Way-Flight </label>
+				<input type="checkbox" name="one-way-flight" id="one-way-flight"/>
 				
-					<input type="text" placeholder="Destination Airport" name="destination" id="destination" class="dest_input" />
+				<div class="form-group">
+					<div class="input-group"><label>Origin </label><input type="text" placeholder="Origin Airport" name="origin" id="origin" class="origin_input input" /></div>
+					<div id="origin-results"></div>
+					
+					<div class="input-group"><label>Destination </label><input type="text" placeholder="Destination Airport" name="destination" id="destination" class="dest_input input" /></div>
 					<div id="destination-results"></div>
-					<span class="error destination">Please set a destination-airport.</span>
 				</div>
-
+				
 				<div class="form-group">
 					<div class="date-input">
 						<div class='input-group date' id='datetimepicker'>
-							<input type="date" placeholder="Outward Date" name="outward-date" id="outward-date" class="form-control" />
+							<label>Outward-Date </label>
+							<input type="date" placeholder="Outward Date" name="outward_date" id="outward_date" class="form-control input" />
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<span class="error outward-date">Please select an outward-date.</span>
 						</div>
 					</div>
-					<div class="date-input">	
+					<div class="date-input">
 						<div class='input-group date' id='datetimepicker1'>
-							<input type="date" placeholder="Return Date" name="return-date" id="return-date" class="form-control" />
+							<label>Return-Date </label>
+							<input type="date" placeholder="Return Date" name="return_date" id="return_date" class="form-control input" />
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
-							<span class="error return-date">Please select a return-date.</span>
 						</div>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<input type="number" placeholder="Number of Adults" name="adult" id="adult" min="0" max="10" />
-					<input type="number" placeholder="Number of Childs" name="child" id="child" min="0" max="10" />
-					<input type="number" placeholder="Number of Seniors" name="senior" id="senior" min="0" max="10" />
-					<span class="error senior">Please set at minimum 1 adult passenger.</span>
+					<div class="input-group"><label>Adults </label><input type="number" placeholder="Number of Adults" name="adult" id="adult" class="input" min="0" max="10" /></div>
+					<div class="input-group"><label>Childs </label><input type="number" placeholder="Number of Childs" name="child" id="child" class="input" min="0" max="10" /></div>
+					<div class="input-group"><label>Seniors </label><input type="number" placeholder="Number of Seniors" name="senior" id="senior" class="input" min="0" max="10" /></div>
 				</div>
 				
 				<div class="form-group">
+					<label>Booking-Class </label>
 					<select id="booking-category" name="booking-category">
 						<option selected="selected">COACH</option>
 						<option>PREMIUM_COACH</option>
@@ -57,6 +56,8 @@
 				<input id="submit-flight-request" type="submit" value="Search">
 		</form>
 	</div>
+	
+	<button id="show-results">Show Results</button>
 	
 	<div id="filter-box">
 		<div class="filters outward">

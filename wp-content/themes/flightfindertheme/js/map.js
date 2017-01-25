@@ -112,7 +112,13 @@
 			reloadMarker();
 		}
 		
-		$("#one-way-flight").attr('checked', $("#return-date")[0].disabled);
+		$("#one-way-flight").attr('checked', $("#return_date")[0].disabled);
 		$("#one-way-flight").click(function(){   
-			$("#return-date").attr('disabled', this.checked)
+			$("#return_date").attr('disabled', this.checked)
+			if($('#one-way-flight').prop('checked')) {
+				$( "#return_date" ).removeAttr('required')
+			} else {
+				$( "#return_date" ).prop('required',true)
+			} 
 		});
+		

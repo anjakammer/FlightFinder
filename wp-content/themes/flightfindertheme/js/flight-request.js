@@ -1,25 +1,29 @@
 	$(function () {
 		
+		$("#adult").val("1");
+		$("#child").val("0");
+		$("#senior").val("0");
+		form_validation();
+		
         $('#search-form').on('submit', function (e) {
 			
-			$("#submit-flight-request").prop('value', 'Loading...');
-			$("#loading-overlay").css('display', 'block');
-			$("#loading").css('display', 'block');
-			
-			var from_airport = $("#origin").val();
-			var to_airport = $("#destination").val();
-			var outward_date = $("#outward-date").val();
-			var return_date = $("#return-date").val();
-			var adults = $("#adult").val();
-			var seniors = $("#senior").val();
 			var latitude_from = $("#origin").attr("data-latitude");
 			var longitude_from = $("#origin").attr("data-longitude");
 			var latitude_to = $("#destination").attr("data-latitude");
 			var longitude_to = $("#destination").attr("data-longitude");
-
-			var url = window.location.href + "/wp-content/themes/flightfindertheme/qpx_query.php";
 			
-			if (to_airport != '' && from_airport != '' && outward_date != '' && return_date != '' && adults != '' || seniors != '') {
+			if($("#adult").val() == "0" && $("#senior").val() == "0") {
+				
+				alert("You have to select at minimum 1 adult passenger (adult/senior)!")
+			
+			} else {				
+			
+				$("#submit-flight-request").prop('value', 'Loading...');
+				$("#loading-overlay").css('display', 'block');
+				$("#loading").css('display', 'block');
+				
+				var url = window.location.href + "/wp-content/themes/flightfindertheme/qpx_query.php";
+			
 				$.ajax({
 					   type: "POST",
 					   url: url,
@@ -41,19 +45,22 @@
 						   
 						   $("#loading-overlay").css('display', 'none');
 						   $("#loading").css('display', 'none');
+						   $("#show-results").css('display', 'block');
 						   $('#result-box').css('display', 'block');
 						   $('#filter-box').fadeIn( "slow" );							   
 						   $("#submit-flight-request").prop('value', 'Search');   
 						   setMarkers(latitude_from, longitude_from, latitude_to, longitude_to);
-						   
-						   /*localStorage.setItem("outward", JSON.stringify(outwardFlights));
-						   localStorage.setItem("return", JSON.stringify(returnFlights));
-						   var outwardFlights = JSON.parse(localStorage.getItem("outward"));
-						   var returnFlights = JSON.parse(localStorage.getItem("return"));*/
 					   }
 				});
 			}
 			e.preventDefault(); // avoid to execute the actual submit of the form.
+		});
+		
+		
+		$('#show-results').on("click", function() {
+			$('html, body').animate({
+				scrollTop: $("#result-box").offset().top
+			}, 1000);
 		});
 	});
 	
@@ -75,20 +82,23 @@
 			
 				var priceField = document.createElement("div");
 				$( priceField ).addClass('price-field');
-				$( priceField ).append(element[i].price + '€ Hin- & Rückflug');
+				$( priceField ).append(element[i].price + '€ Outward- & Returnflight');
 				$( flightBlock ).append( priceField );
 			}
 			
+			var singleFlight = document.createElement("div");
+				$( singleFlight ).addClass('single-flight');
 			var airlineField = document.createElement("div");
 				$( airlineField ).addClass('info-field');
 				$( airlineField ).append('<a href="' + element[i].airline_link + '"><img src="' + element[i].airline_image + '" /><br>' + element[i].airline_name + ' (' + element[i].airline_iata + ')</a>');
 				
-				$( flightBlock ).append( airlineField );	
-				$( flightBlock ).append( getField(element[i].origin,'') );
-				$( flightBlock ).append( getField(element[i].destination,'') );
-				$( flightBlock ).append( getField(element[i].departure,'dat') );
-				$( flightBlock ).append( getField(element[i].arrival,'dat2') );
-				$( flightBlock ).append( getField(element[i].duration,'dur') );
+				$( flightBlock ).append( singleFlight );	
+				$( singleFlight ).append( airlineField );
+				$( singleFlight ).append( getField(element[i].origin,'') );
+				$( singleFlight ).append( getField(element[i].destination,'') );
+				$( singleFlight ).append( getField(element[i].departure,'dat') );
+				$( singleFlight ).append( getField(element[i].arrival,'dat2') );
+				$( singleFlight ).append( getField(element[i].duration,'dur') );
 			
 			last_price = element[i].price;
 		}
@@ -98,16 +108,26 @@
 		var field = document.createElement("div");
 		$( field ).addClass('info-field');
 		if(type == 'dat') {
-			$( field ).append(element + " o'clock");
+			$( field ).append(element);
 			$( field ).addClass('departure');
 		} else if(type == 'dat2') {
-			$( field ).append(element + " o'clock");
+			$( field ).append(element);
 			$( field ).addClass('arrival');
 		} else if(type == 'dur') {
-			$( field ).append(element + " o'clock");
+			$( field ).append(element + " min.");
 			$( field ).addClass('duration');
 		} else {
 			$( field ).append(element);
 		}
 		return field;
+	}
+	
+	function form_validation() {
+		$( "#origin" ).prop('required',true);
+		$( "#destination" ).prop('required',true);
+		$( "#outward_date" ).prop('required',true);
+		$( "#return_date" ).prop('required',true);
+		$( "#adult" ).prop('required',true);
+		$( "#child" ).prop('required',true);
+		$( "#senior" ).prop('required',true);		
 	}

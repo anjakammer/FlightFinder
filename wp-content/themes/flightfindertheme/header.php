@@ -15,4 +15,4 @@
 	<?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
-	<a id="home-link" href="<?php echo home_url(); ?>"><img id="logo" src="<?php echo home_url() . '/wp-content/uploads/airlines/flightfinder-logo.png'; ?>"></a>
+	<a id="home-link" href="<?php echo home_url(); ?>"><img id="logo" src="<?php echo home_url() . '/wp-content/themes/flightfindertheme/img/flightfinder-logo.png' ?>"></a>

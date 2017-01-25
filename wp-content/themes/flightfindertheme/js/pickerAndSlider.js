@@ -87,27 +87,4 @@ $(function () {
 		}
 	});
 	$( "#time2" ).val('0' + 0+':'+ '0' + 0 + ' - ' + 24+':'+ '0' + 0);
-			
-	//Open Filter-Tab
-	$("#switch-filter").on('click', function() {
-		if(!$("#filter-box").hasClass('active')) {
-			$("#filter-box").addClass('active');
-			$(this).html('<span class="fa fa-close"></span>');
-		} else {
-			$("#filter-box").removeClass('active');
-			$(this).html('<span class="fa fa-filter"></span>');
-		}
-		$("#filter-box").slideToggle( "slow" );
-	});
-			
-	//Set Result-Header fixed on top when reached
-	$( window ).scroll( function() {
-		if ($(this).scrollTop() > 720) {
-			$('#outward-head').addClass('fixed');
-			$('#return-head').addClass('fixed');
-		} else {
-			$('#outward-head').removeClass('fixed');
-			$('#return-head').removeClass('fixed');
-		}
-	});
 });

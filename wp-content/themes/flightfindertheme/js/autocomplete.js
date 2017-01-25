@@ -47,7 +47,7 @@
 								if(searchid!='') {
 									$.ajax({
 										type: "POST",
-										url: "http://localhost:8080/flight-finder/wp-content/themes/flightfindertheme/db_query.php",
+										url: window.location.href + "/wp-content/themes/flightfindertheme/db_query.php",
 										data: dataString,
 										cache: false,
 										success: function(html) {
