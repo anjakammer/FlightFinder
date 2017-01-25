@@ -11,3 +11,444 @@ Text Domain: flightfindertheme
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
+	/* Main styles */
+	html, body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		font-family: 'Titillium Web', sans-serif !important;
+		overflow-x: hidden;
+    }
+	
+	#switch-filter {
+		position: absolute;
+		margin: 10px;
+		right: 400px;
+		font-size: 40px;
+		color: #EEE;
+		border: none;
+		background: transparent;
+		box-shadow: none;
+		z-index: 20;
+	}
+	
+	#home-link {
+		position: absolute;
+		margin: 10px;
+		z-index: 20;
+	}
+	
+	#home-link img {
+		width: 200px;
+		height: auto;
+	}
+	
+	#loading-overlay {
+		display: none;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,0.6);
+		z-index: 25;
+	}
+	
+	#loading {
+		display: none;
+		position: absolute;
+		width:200px;
+		height:auto;
+		top: 50%;
+		left: 50%;
+		transform: translate(-100px, -100px);
+		z-index: 30;
+	}
+	
+	/* Navigation-Menu */
+	#nav-menu {
+		width: 100%;
+		height: auto;
+		top: 0;
+		left: 0;
+		position: fixed;
+		background: rgba(0,0,0,0.8);
+		z-index: 20;
+	}
+	
+	#nav-menu ul{
+		margin: 0px;
+	}
+	
+	#nav-menu li {
+		list-style: none;
+	}
+	
+	#nav-menu a {
+		float:left;
+		padding: 10px;
+		display: inline-block;
+		font-size: 20px;
+		font-weight: bold;
+		color: #fff;
+		text-decoration: none;
+	}
+	
+	#nav-menu a:hover {
+		text-decoration: none;
+	}
+	
+	#nav_menu #logo {
+		width:100px;
+		height:auto;
+		float:left;
+	}
+	
+	#nav-menu .cl-effect-15 a {
+	color: rgba(0,0,0,0.2);
+	font-weight: 700;
+	text-shadow: none;
+}
+
+	#nav-menu .cl-effect-15 a::before {
+		color: #fff;
+		content: attr(data-hover);
+		position: absolute;
+		-webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+		-moz-transition: -moz-transform 0.3s, opacity 0.3s;
+		transition: transform 0.3s, opacity 0.3s;
+	}
+
+	#nav-menu .cl-effect-15 a:hover::before,
+	#nav-menu .cl-effect-15 a:focus::before {
+		-webkit-transform: scale(0.9);
+		-moz-transform: scale(0.9);
+		transform: scale(0.9);
+		opacity: 0;
+	}
+	
+	#nav-menu #switch-filter {
+		display: none;
+		float: right;
+		padding: 10px;
+		font-size: 20px;
+		color: #EEE;
+		border: none;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	/* Map Styles */
+    #map {
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+		position: absolute;
+		top: 0;
+    }
+	
+	/* Search Styles */
+	#search-box {
+		position: absolute;
+		top: 20px;
+		right: 10px;
+		width: 25%;
+		z-index: 5;
+		font-size: 130%;
+		line-height: 130%;
+		float: right;
+		padding: 18px;
+		background-color: rgba(0,0,0,0.6);
+	}
+	
+	#search-box .input-group-addon {
+		float:none;
+		background: #0C89C9 !important;
+	}
+	
+	#search-box .input-group-addon .glyphicon-calendar {
+		color: #fff;
+	}
+	
+	#search-box label {
+		font-size: 16px;
+		font-weight: normal;
+		color: #fff;
+	}
+	
+	#search-box input {
+		width: 60%;
+		float: right;
+		height: 32px;
+		padding: 5px;
+		font-size: 14px;
+		color: #333;
+		margin: 2px 0;
+	}
+	
+	#search-box #origin-results,
+	#search-box #destination-results	{
+		display:none;
+		width: 344px;
+		height: auto;
+		max-height: 330px;
+		background: #fff;
+		color: #777777;
+		font-size: 14px;
+		font-weight: normal;
+		overflow-y: scroll;
+		padding: 5px;
+		position: absolute;
+		z-index: 20;
+	}
+	
+	#search-box #origin-results .ap_item,
+	#search-box #destination-results .ap_item	{
+		cursor:pointer;
+	}
+	
+	#search-box #origin-results .ap_item:hover,
+	#search-box #destination-results .ap_item:hover	{
+		cursor:pointer;
+		border: 1px solid rgb(86, 180, 239);
+		box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+	}
+	
+	#search-box #origin-results strong, 
+	#search-box #destination-results strong {
+		font-size: 12px;
+		font-weight: normal;
+		color: #777777;
+	}
+	
+	#search-box .input-group {
+		width: 100%;
+	}
+	
+	#search-box .input-group label {
+		display: inline-block;
+		width: 40%;
+		float: left;
+		margin: 0px;
+		line-height: 32px;
+	}
+	
+	#search-box .input-group.date #outward_date,
+	#search-box .input-group.date #return_date	{
+		display: inline-block;
+		width: 55%;
+		float: right;
+		margin: 0px;
+		border-radius: 0px;
+	}
+	
+	#search-box .input-group-addon {
+		border: 1px;
+		box-sizing: content-box;
+		-moz-box-sizing: content-box;
+	}
+	
+	#search-box .date-input {
+		margin: 4px 0;
+	}
+	
+	#search-box #one-way-flight {
+		width: auto;
+		vertical-align: middle;
+		float: left !important;
+		margin-left: 28px;
+		margin-top: -2px;
+	}
+	
+	#search-box select {
+		height: 32px;
+		width: 60%;
+		font-size: 12px;
+		color: #333;
+		float: right;
+	}
+	
+	#search-box #submit-flight-request {
+		width: 100% !important;
+		height: auto;
+		background: #0C89C9 !important;
+		border: none;
+		border-radius: 0px;
+		box-shadow: none;
+		color: #FFF !important;
+		font-size: 16px!important;
+	}
+	
+	.error {
+		display:none;
+		color:red;
+		font-size:12px;
+	}
+	
+	/* Filter Styles */
+	#filter-box {
+		display: none;
+		position: fixed;
+		bottom: 20px;
+		right: 10px;
+		width: 25%;
+		height: 200px;
+		color: #EEE;
+		z-index: 20;
+		font-size: 130%;
+		line-height: 130%;
+		float: left;
+		padding: 10px;
+		background-color: rgba(0,0,0,0.6);
+	}
+	
+	#filter-box .filters {
+		width:50%;
+		float:left;
+		padding: 0px 10px;
+	}
+	
+	#filter-box label {
+	    font-size: 16px;
+		font-weight: normal;
+		color: #fff;
+	}
+	
+	#filter-box .filters .filter-input {
+		border:0; 
+		color:#f6931f; 
+		font-weight:bold;
+	}
+	
+	#filter-box #amount,
+	#filter-box #time,
+	#filter-box #amount2,
+	#filter-box #time2	{
+		border: none;
+		background: transparent;
+	}
+	
+	#filter-box .filter-slider {
+		width: 90%;
+		margin: 0px 10px 10px;
+	}
+	
+	/* Result Styles */
+	#show-results {
+		display: none;
+		position: absolute;
+		left: calc(50% - 75px);
+		bottom: 50px;
+		width: 150px;
+		height: auto;
+		padding: 10px;
+		background: #0C89C9;
+		border: 2px solid #CCC;
+		border-radius: 0px;
+		box-shadow: none;
+		color: #FFF;
+		font-size: 16px;
+		z-index: 25;
+	}
+	
+	#show-results:hover {
+		background: #0EA8EA;
+	}
+	
+	#result-box {
+		display: none;
+		width: 100%;
+		position: absolute;
+		padding: 10px 10px;
+		z-index: 19;
+		top: 100vh;
+		background:#333;
+	}
+	
+	#outward,
+	#return {
+		width:50%;
+		height:auto;
+		float:left;
+		padding: 5px;
+	}
+	
+	#result-box .outward-flights,
+	#result-box .return-flights	{
+		width: 100%;
+		height: 50px;
+		display:inline-block;
+		font-size: 20px;
+		font-weight: bold;
+		color: #EEE;
+		background: #666;
+		padding: 5px;
+	}
+	
+	#result-box .price-field {
+		width: 100%;
+		height: 38px;
+		display: inline-block;
+		font-size: 18px;
+		color: #EEE;
+		padding: 5px;
+		background: #333;
+	}
+	
+	#result-box #outward-head,
+	#result-box #return-head	{
+		width: 100%;
+		height: 50px;
+		display: inline-block;
+	}
+	
+	#result-box #outward-head.fixed {
+		width: 48.66%;
+		position:fixed;
+		top:0px;
+		z-index:20;
+		left: 15px;
+		float: left;
+	}
+	
+	#result-box #return-head.fixed {
+		width: 48.66%;
+		position:fixed;
+		top:0px;
+		z-index:20;
+		right:15px;
+		float: right;
+	}
+	
+	#result-box .info-head {
+		width: 16.66%;
+		height: 50px;
+		padding: 5px;
+		font-size: 16px;
+		color: #333;
+		background-color: #CCC;
+		border: 1px solid #AAA;
+		display: inline-block;
+		float: left;
+	}
+	
+	#result-box .flight-block {
+		width:100%;
+		height:auto;
+		display:inline-block;
+	}
+	
+	#result-box .info-field {
+		width: 16.66%;
+		height: 90px;
+		padding: 5px;
+		font-size: 16px;
+		color: #333;
+		background-color: #EEE;
+		border: 1px solid #CCC;
+		display: inline-block;
+		float: left;
+	}
+	
+	#result-box .info-field a img {
+		width:85px;
+		height:auto;
+	}
