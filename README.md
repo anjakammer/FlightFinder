@@ -8,3 +8,11 @@ These meta data are stored in custom database tables, which were created by the 
 
 ## Features
 You find a [list of features here] (https://github.com/anjakammer/FlightFinder/labels/Feature)
+
+## How to install the Flight Finder Theme
+1. Install a WebServer, like [XAMPP](https://www.apachefriends.org/download.html)
+2. [Install Wordpress](https://premium.wpmudev.org/blog/setting-up-xampp)
+3. Download the [Theme-Package from GitHub](https://github.com/anjakammer/flightfinder/blob/master/flightfindertheme.zip)
+4. [Install the Theme](http://www.wpbeginner.com/beginners-guide/how-to-install-a-wordpress-theme/) using Upload Method from WordPress Admin
+5. Wordpress asks you to activate the Theme, do so
+6. Go to the Website Frontend. That's it. Enjoy
